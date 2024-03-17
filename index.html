@@ -24,6 +24,9 @@
     n=o.getElementsByTagName(u)[0];n.parentNode.insertBefore(d,n)
   })(window,document,'script','https://www.datadoghq-browser-agent.com/us5/v5/datadog-rum.js','DD_RUM')
   window.DD_RUM.onReady(function() {
+    // Generate a unique identifier for the user
+    var userId = generateUserId();
+    
     window.DD_RUM.init({
       clientToken: 'pubce3a6b11110b6216e7cd86548c28d181',
       applicationId: 'dfa5bd1a-56f2-4857-a00f-3060abf169d9',
@@ -39,10 +42,24 @@
       trackLongTasks: true,
       trackViewsManually: true,
       defaultPrivacyLevel: 'mask-user-input',
+      // Pass the userId as a custom attribute
+      beforeSend: function (data) {
+        data.usr = userId;
+      }
     });
     
+    // Function to generate a unique user ID
+    function generateUserId() {
+      var userId = localStorage.getItem('userId');
+      if (!userId) {
+        userId = Date.now() + Math.random().toString(36).substring(7);
+        localStorage.setItem('userId', userId);
+      }
+      return userId;
+    }
   })
 </script>
+
 
 </head>
 <body>
