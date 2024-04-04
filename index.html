@@ -436,5 +436,40 @@ At KKC Builders, we believe in building long-lasting relationships and turning y
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
 </script>
+	<script>
+  // Function to handle user authentication
+  function signIn() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider)
+      .then((result) => {
+        // User signed in successfully
+        const user = result.user;
+        console.log("Signed in user:", user);
+      })
+      .catch((error) => {
+        // Handle errors
+        console.error("Authentication error:", error);
+      });
+  }
+
+  // Function to sign out user
+  function signOut() {
+    firebase.auth().signOut()
+      .then(() => {
+        // User signed out successfully
+        console.log("User signed out");
+      })
+      .catch((error) => {
+        // Handle errors
+        console.error("Sign out error:", error);
+      });
+  }
+</script>
+	<!-- Sign-in Button -->
+<button onclick="signIn()">Sign In with Google</button>
+
+<!-- Sign-out Button -->
+<button onclick="signOut()">Sign Out</button>
+
 </body>
 </html>
